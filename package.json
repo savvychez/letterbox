@@ -1,0 +1,27 @@
+{
+  "name": "letterbox",
+  "version": "1.0.0",
+  "description": "a simple restful message passing protocol",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/savvychez/letterbox.git"
+  },
+  "keywords": [
+    "fastify"
+  ],
+  "author": "savvy chezhian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/savvychez/letterbox/issues"
+  },
+  "homepage": "https://github.com/savvychez/letterbox#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3"
+  }
+}
