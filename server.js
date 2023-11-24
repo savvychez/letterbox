@@ -4,19 +4,42 @@ import dotenv from 'dotenv'
 // load env variables
 dotenv.config()
 
-const fastify = Fastify({
+const server = Fastify({
   logger: true
 })
 
-fastify.get('/', async (request, reply) => {
+server.get('/', async (request, reply) => {
   return { status: 'OK' }
 })
 
+server.get('/latest', async (request, reply) => {
+  const data = {
+    "type": "live",
+    "hash": "abcdefg",
+    "timestamp": "Jan 1, 2021",
+    "message": "Hello live!!",
+    "bg": "#F3F3F3",
+    "color": "#000000"
+  }
+  return data;
+})
+
+server.get('/daily', async (request, reply) => {
+  const data = {
+    "type": "daily",
+    "hash": "abcdefg",
+    "timestamp": "Jan 1, 2021",
+    "message": "Hello daily",
+    "bg": "#F3F3F3",
+    "color": "#000000"
+  }
+  return data;
+})
 
 // run server
 try {
-  await fastify.listen({ port: process.env.PORT || 3000 })
+  await server.listen({ port: process.env.PORT || 3000 })
 } catch (err) {
-  fastify.log.error(err)
+  server.log.error(err)
   process.exit(1)
 }
