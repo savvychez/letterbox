@@ -17,7 +17,8 @@ server.get('/latest', async (request, reply) => {
     "type": "live",
     "hash": "abcdefg",
     "timestamp": "Jan 1, 2021",
-    "message": "hey neha!! how are you? this is a test message im testing the api so you won't see it but i hope you have a great day!",
+    // "message": "hi!! how are you? this is a test message im testing the api so you won't see it but i hope you have a great day!",
+    "message": "Hello world",
     "bg": "#F3F3F3",
     "color": "#000000"
   }
