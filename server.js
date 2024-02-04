@@ -1,24 +1,48 @@
 import Fastify from 'fastify'
 import dotenv from 'dotenv'
+import crypto from 'crypto'
+import path from 'path'
+import fastifyStatic from '@fastify/static'
+import formbody from '@fastify/formbody'
 
 // load env variables
 dotenv.config()
+let message = "oops there was an error! if ur seeing this text me!!"
 
 const server = Fastify({
   logger: true
 })
 
+server.register(fastifyStatic, {
+  root: path.join(process.cwd(), 'public'),
+  prefix: '/', // optional: default '/'
+})
+server.register(formbody)
+
+
 server.get('/', async (request, reply) => {
-  return { status: 'OK' }
+  return reply.sendFile('index.html') // serving path.join(__dirname, 'public', 'index.html') directly
+})
+
+server.post('/', async (request, reply) => {
+  const message_txt  = request.body.message;
+  // return request.body;
+  message = message_txt;
+  console.log('message:', message);
+  // Do something with the message here
+  return { status: 'OK', message }
 })
 
 server.get('/latest', async (request, reply) => {
+  const hash = crypto.createHash('md5');
+  hash.update(message);
+  const hashedMessage = hash.digest('hex');
   const data = {
     "type": "live",
-    "hash": "abcdefg",
+    "hash": hashedMessage,
     "timestamp": "Jan 1, 2021",
     // "message": "hi!! how are you? this is a test message im testing the api so you won't see it but i hope you have a great day!",
-    "message": "Hi mom! how are you?",
+    "message": message,
     "bg": "#F3F3F3",
     "color": "#000000"
   }
