@@ -9,6 +9,7 @@ import formbody from '@fastify/formbody'
 dotenv.config()
 let message = "oops there was an error! if ur seeing this text me!!"
 let viewed = false;
+let likes = 0;
 const server = Fastify({
   logger: true
 })
@@ -32,6 +33,11 @@ server.post('/', async (request, reply) => {
   // Do something with the message here
   viewed = false;
   return { status: 'OK', message }
+})
+
+server.get('/like', async (request, reply) => {
+  likes++;
+  return { status: 'OK', "likes": likes };
 })
 
 server.get('/latest', async (request, reply) => {
