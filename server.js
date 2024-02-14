@@ -8,7 +8,7 @@ import formbody from '@fastify/formbody'
 // load env variables
 dotenv.config()
 let message = "oops there was an error! if ur seeing this text me!!"
-
+let viewed = false;
 const server = Fastify({
   logger: true
 })
@@ -30,10 +30,17 @@ server.post('/', async (request, reply) => {
   message = message_txt;
   console.log('message:', message);
   // Do something with the message here
+  viewed = false;
   return { status: 'OK', message }
 })
 
 server.get('/latest', async (request, reply) => {
+  const viewParam = request.query.view;
+
+  if (viewParam === 'true') {
+    viewed = true;
+  }
+
   const hash = crypto.createHash('md5');
   hash.update(message);
   const hashedMessage = hash.digest('hex');
@@ -41,7 +48,7 @@ server.get('/latest', async (request, reply) => {
     "type": "live",
     "hash": hashedMessage,
     "timestamp": "Jan 1, 2021",
-    // "message": "hi!! how are you? this is a test message im testing the api so you won't see it but i hope you have a great day!",
+    "viewed": viewed,
     "message": message,
     "bg": "#F3F3F3",
     "color": "#000000"
